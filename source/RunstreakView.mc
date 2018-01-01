@@ -1,6 +1,10 @@
 using Toybox.WatchUi as Ui;
 using Toybox.ActivityMonitor;
 using Toybox.Graphics;
+using Toybox.System;
+using Toybox.Time;
+using Toybox.Time.Gregorian;
+using Toybox.Application.Storage;
 
 class RunstreakView extends Ui.View {
 
@@ -33,8 +37,11 @@ class RunstreakView extends Ui.View {
     function onHide() {
     }
     
-    
     function getCurrentStreak(){
+    		var lastSynced = Storage.getValue("lastSynced");
+    		var lastSyncStreak = Storage.getValue("streak");
+    		var today = Time.today().value();
+    		Storage.setValue("lastSynced",today);
     		var hist = ActivityMonitor.getHistory();
     		if (hist.size() == 0){
     			return -1;
@@ -60,7 +67,12 @@ class RunstreakView extends Ui.View {
     		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.clear();
         
-        var text = streak != -1 ? streak.toString() : "NO DATA";
+        if(streak == 1) {
+        		dc.drawText(xCenter, yCenter, Graphics.FONT_LARGE, "NO DATA", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
+        		return;
+        }
+        
+        var text = streak.toString();
         var textFont = Graphics.FONT_NUMBER_HOT;     
         var headingFont = Graphics.FONT_XTINY;  
         var textHeight = dc.getFontHeight(textFont);
