@@ -15,27 +15,21 @@ class Runstreaks {
 	//TODO: Store Longest streak
 	
 	function load(){
+		var streak = Streak.load("current");
+		appendHistory(streak);
+		streak.save("current");
+		appendToday(streak);
+		currentStreak = streak.length();
 	
-		var lastSynced = Storage.getValue("lastSynced");
-    		var lastSyncStreak = Storage.getValue("streak");
-    		var today = Time.today().value();
-    		Storage.setValue("lastSynced",today);
-    		
-    		var currentDay = ActivityMonitor.getInfo();	
-    		var isActiveToday = 	currentDay.activeMinutesDay.total >= activeMinutesLimit;
-    		var hist = ActivityMonitor.getHistory();
-    		if (hist.size() == 0 && !isActiveToday){
-    			return;
-    		}
-    		currentStreak = isActiveToday ? 1 : 0;
-    	
-    		for (var i = 0; i < hist.size(); i++) {
-    			// check hist[i].activeMinutes.startOfDay
-    			if (hist[i].activeMinutes.total < activeMinutesLimit) {
-    				return;
-    			} 
-    			currentStreak = currentStreak + 1;
-    		}
+		
+	}
+	
+	function appendToday(streak) {
+		var currentDay = ActivityMonitor.getInfo();	
+		var isActiveToday = 	currentDay.activeMinutesDay.total >= activeMinutesLimit;
+		if(isActiveToday) {
+			streak.setActiveOn(Time.today());
+		}
 	}
 	
 	function appendHistory(streak){
@@ -45,21 +39,24 @@ class Runstreaks {
 			return;
 		}
 		
-		if(streak == null) {
+		if(streak.isEmpty()) {
 			var lastDay = hist[hist.size() -1 ];
 			//TODO: Correct this
-			streak = new Streak(lastDay.startOfDay,lastDay.startOfDay);
+			streak.reset(lastDay.startOfDay);
 		}
 		for (var i = hist.size()-1; i > 0; i--) {
 			var element = hist[i];
 			var day = element.startOfDay;
-			if (day.value() < streak.end) {
+			if (streak.contains(day)) {
 				continue;
 			}
-    			if (element.activeMinutes.total < activeMinutesLimit) {
-    				streak = new Streak(day,day);
+    			if (element.activeMinutes.total > activeMinutesLimit) {
+    				streak.setActiveOn(day);
     			}
-    			streak.setEnd(day);
+    			else {
+    				streak.reset(day);
+    			}
+    			
     		}
 	}
 	

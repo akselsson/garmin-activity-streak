@@ -46,7 +46,7 @@ class RunstreakView extends Ui.View {
     		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.clear();
         
-        if(streak == 1) {
+        if(streak == -1) {
         		dc.drawText(xCenter, yCenter, Graphics.FONT_LARGE, "NO DATA", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         		return;
         }
