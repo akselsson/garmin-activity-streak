@@ -4,6 +4,7 @@ using Toybox.Graphics;
 
 class RunstreakView extends Ui.View {
 
+	hidden var mStreak;
     function initialize() {
         View.initialize();
     }
@@ -17,13 +18,13 @@ class RunstreakView extends Ui.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() {
+    		mStreak = getCurrentStreak();
     }
 
     // Update the view
     function onUpdate(dc) {
         View.onUpdate(dc);
-        var streak = getCurrentStreak();
-    		renderStreak(dc,streak);
+    		renderStreak(dc);
     }
 
     // Called when this View is removed from the screen. Save the
@@ -49,7 +50,8 @@ class RunstreakView extends Ui.View {
     		return streak;
     }
     
-    function renderStreak(dc,streak){
+    function renderStreak(dc){
+    		var streak = mStreak;
     		var width = dc.getWidth();
     		var height = dc.getHeight();
     		
