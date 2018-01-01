@@ -37,18 +37,24 @@ class RunstreakView extends Ui.View {
     function onHide() {
     }
     
-    function getCurrentStreak(){
+    	function getCurrentStreak(){
+    		var activeMinutesLimit = 15;
+    
     		var lastSynced = Storage.getValue("lastSynced");
     		var lastSyncStreak = Storage.getValue("streak");
     		var today = Time.today().value();
     		Storage.setValue("lastSynced",today);
+    		
+    		var currentDay = ActivityMonitor.getInfo();	
+    		var isActiveToday = 	currentDay.activeMinutesDay.total >= activeMinutesLimit;
     		var hist = ActivityMonitor.getHistory();
-    		if (hist.size() == 0){
+    		if (hist.size() == 0 && !isActiveToday){
     			return -1;
     		}
-    		var streak = 0;
-    		var activeMinutesLimit = 15;
+    		var streak = isActiveToday ? 1 : 0;
+    	
     		for (var i = 0; i < hist.size(); i++) {
+    			// check hist[i].activeMinutes.startOfDay
     			if (hist[i].activeMinutes.total < activeMinutesLimit) {
     				return streak;
     			} 
