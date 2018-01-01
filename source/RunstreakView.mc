@@ -1,16 +1,13 @@
 using Toybox.WatchUi as Ui;
-using Toybox.ActivityMonitor;
 using Toybox.Graphics;
 using Toybox.System;
-using Toybox.Time;
-using Toybox.Time.Gregorian;
-using Toybox.Application.Storage;
 
 class RunstreakView extends Ui.View {
 
 	hidden var mStreak;
     function initialize() {
         View.initialize();
+        mStreak = new Runstreaks();
     }
 
     // Load your resources here
@@ -22,13 +19,13 @@ class RunstreakView extends Ui.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
     function onShow() {
-    		mStreak = getCurrentStreak();
+    		mStreak.load();
     }
 
     // Update the view
     function onUpdate(dc) {
         View.onUpdate(dc);
-    		renderStreak(dc);
+    		render(dc);
     }
 
     // Called when this View is removed from the screen. Save the
@@ -36,35 +33,11 @@ class RunstreakView extends Ui.View {
     // memory.
     function onHide() {
     }
+
+
     
-    	function getCurrentStreak(){
-    		var activeMinutesLimit = 15;
-    
-    		var lastSynced = Storage.getValue("lastSynced");
-    		var lastSyncStreak = Storage.getValue("streak");
-    		var today = Time.today().value();
-    		Storage.setValue("lastSynced",today);
-    		
-    		var currentDay = ActivityMonitor.getInfo();	
-    		var isActiveToday = 	currentDay.activeMinutesDay.total >= activeMinutesLimit;
-    		var hist = ActivityMonitor.getHistory();
-    		if (hist.size() == 0 && !isActiveToday){
-    			return -1;
-    		}
-    		var streak = isActiveToday ? 1 : 0;
-    	
-    		for (var i = 0; i < hist.size(); i++) {
-    			// check hist[i].activeMinutes.startOfDay
-    			if (hist[i].activeMinutes.total < activeMinutesLimit) {
-    				return streak;
-    			} 
-    			streak = streak + 1;
-    		}
-    		return streak;
-    }
-    
-    function renderStreak(dc){
-    		var streak = mStreak;
+    function render(dc){
+    		var streak = mStreak.currentStreak;
     		var width = dc.getWidth();
     		var height = dc.getHeight();
     		
