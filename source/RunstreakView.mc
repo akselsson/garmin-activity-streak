@@ -51,7 +51,7 @@ class RunstreakView extends Ui.View {
         dc.setColor(progressColor, progressColor);
         dc.fillCircle(xCenter, yCenter, width / 2 - 1);
   		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
- 		dc.fillCircle(xCenter, yCenter, width / 2 - 5);
+ 		dc.fillCircle(xCenter, yCenter, width / 2 - 7);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         
         if(streak == -1) {
@@ -61,12 +61,12 @@ class RunstreakView extends Ui.View {
         
         var text = streak.toString();
         var textFont = Graphics.FONT_NUMBER_HOT;     
-        var headingFont = Graphics.FONT_XTINY;  
+        var headingFont = Graphics.FONT_TINY;  
         var textHeight = dc.getFontHeight(textFont);
         var headingHeight = dc.getFontHeight(headingFont);
         var margin = textHeight * 0.2;
        
-        dc.drawText(xCenter, yCenter - textHeight / 2 - headingHeight - margin, headingFont, "Current streak", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(xCenter, yCenter - textHeight / 2 - headingHeight - margin, headingFont, "Active streak", Graphics.TEXT_JUSTIFY_CENTER);
        	dc.drawText(xCenter, yCenter, textFont, text, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         dc.drawText(xCenter, yCenter + textHeight / 2 + margin, headingFont, "days", Graphics.TEXT_JUSTIFY_CENTER);
         
