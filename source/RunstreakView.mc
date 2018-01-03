@@ -5,9 +5,9 @@ using Toybox.System;
 class RunstreakView extends Ui.View {
 
     hidden var mStreak;
-    function initialize() {
+    function initialize(runstreaks) {
         View.initialize();
-        mStreak = new Runstreaks();
+        mStreak = runstreaks;
     }
 
     // Load your resources here
@@ -37,7 +37,7 @@ class RunstreakView extends Ui.View {
 
 
     function render(dc){
-        var streak = mStreak.currentStreak;
+        var streak = mStreak.currentStreak.length();
         var width = dc.getWidth();
         var height = dc.getHeight();
 
@@ -79,5 +79,22 @@ class RunstreakView extends Ui.View {
 
 
     }
+}
 
+
+
+class RunstreakDelegate extends Ui.InputDelegate {
+        hidden var mStreak;
+        function initialize(runstreaks) {
+            mStreak = runstreaks;
+        }
+
+        function onKey(evt) {
+            if (evt.getKey() == Ui.KEY_ENTER) {
+                Ui.pushView(new LongestStreakView(mStreak), new Ui.InputDelegate(),
+                            Ui.SLIDE_LEFT);
+                return true;
+            }
+            return false;
+        }
 }
