@@ -52,28 +52,27 @@ class Streak {
 		end = day;
 	}
 	
-	function add(streak) {
+	function add(other) {
 		if(!isActive) {
-			if(!streak.isActive){
-				return;
+			if(other.isActive){
+				start = other.start;
+				end = other.end;
+				isActive = true;
 			}
-			start = streak.start;
-			end = streak.end;
-			isActive = true;
 			return;
 		}
-		if(!streak.isActive) {
+		if(!other.isActive) {
 			return;
 		}
 		//Both are active
-		if(!intercepts(streak)){
+		if(!intercepts(other)){
 			return;
 		}
-		if(streak.start.lessThan(start)){
-			start = streak.start;
+		if(other.start.lessThan(start)){
+			start = other.start;
 		}
-		if(streak.end.greaterThan(end)){
-			end = streak.end;
+		if(other.end.greaterThan(end)){
+			end = other.end;
 		}
 	}
 	
