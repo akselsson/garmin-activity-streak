@@ -7,8 +7,8 @@ using Toybox.ActivityMonitor;
 
 class Runstreaks {
 	var currentStreak = -1;
-	var isCompletedToday = false;
-	var activeMinutesLimit = 15;
+	var percentCompleteToday = 0;
+	var activeMinutesLimit = 15.0;
 	 
 	//TODO: Store Longest streak
 	function load(){
@@ -20,7 +20,6 @@ class Runstreaks {
 		streak.save("current");
 		
 		var todayStreak = streakFromToday();
-		isCompletedToday = todayStreak.isActive;
 		streak.add(todayStreak);
 		currentStreak = streak.length();
 	}
@@ -32,6 +31,10 @@ class Runstreaks {
 		var isActiveToday = 	currentDay.activeMinutesDay.total >= activeMinutesLimit;
 		if(isActiveToday) {	
 			s.setActiveOn(Time.today());
+			percentCompleteToday = 1;
+		}
+		else {
+			percentCompleteToday = currentDay.activeMinutesDay.total / activeMinutesLimit;
 		}
 		return s;
 	}

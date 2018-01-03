@@ -44,14 +44,19 @@ class RunstreakView extends Ui.View {
     		var xCenter = width / 2;
     		var yCenter = height / 2;
     		
-    		var progressColor = mStreak.isCompletedToday ? Graphics.COLOR_GREEN : Graphics.COLOR_ORANGE;
+    		var progressColor = mStreak.percentCompleteToday >= 1 ? Graphics.COLOR_GREEN : Graphics.COLOR_ORANGE;
+    		var progressDegress = mStreak.percentCompleteToday >= 1 ? 360 : 360 * mStreak.percentCompleteToday;
     		
     		dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);  
         dc.clear();
         dc.setColor(progressColor, progressColor);
-        dc.fillCircle(xCenter, yCenter, width / 2 - 1);
-  		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
- 		dc.fillCircle(xCenter, yCenter, width / 2 - 7);
+        for(var i = 1 ; i<= 7; i++) {
+        		dc.drawArc(xCenter, yCenter, width / 2 - i, 1, 90, (90 - progressDegress.toLong()) % 360);
+        }
+        
+        //dc.fillCircle(xCenter, yCenter, width / 2 - 1);
+  		//dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+ 		//dc.fillCircle(xCenter, yCenter, width / 2 - 7);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         
         if(streak == -1) {
