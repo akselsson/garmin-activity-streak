@@ -1,11 +1,11 @@
 using Toybox.Application as App;
 
-class RunstreakApp extends App.AppBase {
-    hidden var mStreak;
+class StreakApp extends App.AppBase {
+    hidden var mStreaks;
 
     function initialize() {
         AppBase.initialize();
-        mStreak = new Runstreaks();
+        mStreaks = new StreakRepository();
     }
 
     // onStart() is called on application start up
@@ -18,7 +18,7 @@ class RunstreakApp extends App.AppBase {
 
     // Return the initial view of your application here
     function getInitialView() {
-        return [ new RunstreakView(mStreak), new RunstreakDelegate(mStreak) ];
+        return [ new ActiveStreakView(mStreaks), new ActiveStreakDelegate(mStreaks) ];
     }
 
 }

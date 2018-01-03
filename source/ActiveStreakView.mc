@@ -2,7 +2,7 @@ using Toybox.WatchUi as Ui;
 using Toybox.Graphics;
 using Toybox.System;
 
-class RunstreakView extends Ui.View {
+class ActiveStreakView extends Ui.View {
 
     hidden var mStreak;
     function initialize(runstreaks) {
@@ -83,7 +83,7 @@ class RunstreakView extends Ui.View {
 
 
 
-class RunstreakDelegate extends Ui.InputDelegate {
+class ActiveStreakDelegate extends Ui.InputDelegate {
         hidden var mStreak;
         function initialize(runstreaks) {
             mStreak = runstreaks;

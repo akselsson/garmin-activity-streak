@@ -5,14 +5,13 @@ using Toybox.Application.Storage;
 using Toybox.ActivityMonitor;
 
 
-class Runstreaks {
+class StreakRepository {
     var percentCompleteToday = 0;
     var activeMinutesLimit = 15.0;
 
     var currentStreak;
     var longestStreak;
 
-    //TODO: Store Longest streak
     function load(){
         var streak = Streak.load("current");
 
