@@ -24,19 +24,21 @@ class StreakRepository {
         var todayStreak = streakFromToday();
         streak.add(todayStreak);
 
+        currentStreak = streak;
+
         longestStreak = Streak.load("longest");
         if(streak.length() > longestStreak.length()) {
-            streak.save("longest");
             longestStreak = streak;
+            longestStreak.save("longest");
         }
-        currentStreak = streak;
+
     }
 
 
     function streakFromToday() {
         var s = Streak.empty();
         var currentDay = ActivityMonitor.getInfo();
-        var isActiveToday =     currentDay.activeMinutesDay.total >= activeMinutesLimit;
+        var isActiveToday = currentDay.activeMinutesDay.total >= activeMinutesLimit;
         if(isActiveToday) {
             s.setActiveOn(Time.today());
             percentCompleteToday = 1;
@@ -51,18 +53,16 @@ class StreakRepository {
         var streak = Streak.empty();
         var hist = ActivityMonitor.getHistory();
         for (var i = hist.size()-1; i >= 0; i--) {
-
             var element = hist[i];
             var day = element.startOfDay;
-
-                if (element.activeMinutes.total > activeMinutesLimit) {
-                    streak.setActiveOn(day);
-                }
-                else {
-                    streak.reset(day);
-                }
+            if (element.activeMinutes.total > activeMinutesLimit) {
+                streak.setActiveOn(day);
             }
-            return streak;
+            else {
+                streak.reset(day);
+            }
+        }
+        return streak;
     }
 
 
