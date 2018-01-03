@@ -58,7 +58,7 @@ class RunstreakView extends Ui.View {
         var headingHeight = dc.getFontHeight(headingFont);
         var margin = textHeight * 0.2;
        
-        dc.drawText(xCenter, yCenter - textHeight / 2 - headingHeight - margin, headingFont, "Active streak", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(xCenter, yCenter - textHeight / 2 - headingHeight - margin, headingFont, "Current streak", Graphics.TEXT_JUSTIFY_CENTER);
        	dc.drawText(xCenter, yCenter, textFont, text, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
         dc.drawText(xCenter, yCenter + textHeight / 2 + margin, headingFont, "days", Graphics.TEXT_JUSTIFY_CENTER);
         

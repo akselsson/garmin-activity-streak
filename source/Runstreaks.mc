@@ -4,60 +4,51 @@ using Toybox.Time.Gregorian;
 using Toybox.Application.Storage;
 using Toybox.ActivityMonitor;
 
+
 class Runstreaks {
 	var currentStreak = -1;
 	var activeMinutesLimit = 15;
-	
-	
-	
-	//TODO: Store current streak 
-	//TODO: Check that there are no gaps against current streak
+	 
 	//TODO: Store Longest streak
-	
 	function load(){
 		var streak = Streak.load("current");
-		appendHistory(streak);
-		streak.save("current");
-		appendToday(streak);
-		currentStreak = streak.length();
-	
+		//var streak = Streak.empty();
+		var historyStreak = streakFromHistory();
 		
+		streak.add(historyStreak);
+		streak.save("current");
+		
+		var todayStreak = streakFromToday();
+		streak.add(todayStreak);
+		currentStreak = streak.length();
 	}
 	
-	function appendToday(streak) {
+	function streakFromToday() {
+		var s = Streak.empty();
 		var currentDay = ActivityMonitor.getInfo();	
 		var isActiveToday = 	currentDay.activeMinutesDay.total >= activeMinutesLimit;
-		if(isActiveToday) {
-			streak.setActiveOn(Time.today());
+		if(isActiveToday) {	
+			s.setActiveOn(Time.today());
 		}
+		return s;
 	}
 	
-	function appendHistory(streak){
-		
+	function streakFromHistory(){
+		var streak = Streak.empty();
 		var hist = ActivityMonitor.getHistory();
-		if(hist.size() == 0){
-			return;
-		}
-		
-		if(streak.isEmpty()) {
-			var lastDay = hist[hist.size() -1 ];
-			//TODO: Correct this
-			streak.reset(lastDay.startOfDay);
-		}
-		for (var i = hist.size()-1; i > 0; i--) {
+		for (var i = hist.size()-1; i >= 0; i--) {
+			
 			var element = hist[i];
 			var day = element.startOfDay;
-			if (streak.contains(day)) {
-				continue;
-			}
+			
     			if (element.activeMinutes.total > activeMinutesLimit) {
     				streak.setActiveOn(day);
     			}
     			else {
     				streak.reset(day);
-    			}
-    			
+    			}	
     		}
+    		return streak;
 	}
 	
 	

@@ -1,11 +1,15 @@
 using Toybox.Application.Storage;
 using Toybox.Time;
+using Toybox.Time.Gregorian;
 
 class Streak {
 	var start;
 	var end;
 	var isActive = false;
-	static var empty = new Streak(null,null,false);
+	
+	static function empty() {
+		return new Streak(null,null,false);
+	}
 
 	
 	function initialize(start, end, isActive){
@@ -48,6 +52,41 @@ class Streak {
 		end = day;
 	}
 	
+	function add(streak) {
+		if(!isActive) {
+			if(!streak.isActive){
+				return;
+			}
+			start = streak.start;
+			end = streak.end;
+			isActive = true;
+			return;
+		}
+		if(!streak.isActive) {
+			return;
+		}
+		//Both are active
+		if(!intercepts(streak)){
+			return;
+		}
+		if(streak.start.lessThan(start)){
+			start = streak.start;
+		}
+		if(streak.end.greaterThan(end)){
+			end = streak.end;
+		}
+	}
+	
+	function intercepts(streak) {
+		if(start.compare(streak.start) <= 0 && end.compare(streak.start) >= -Gregorian.SECONDS_PER_DAY) {
+			return true;
+		}
+		if(streak.start.compare(start) <= 0 && streak.end.compare(start) >= -Gregorian.SECONDS_PER_DAY) {
+			return true;
+		}
+		return false;
+	}
+	
 	function save(prefix){
 		Storage.setValue(prefix + "_start",self.start.value());
 		Storage.setValue(prefix + "_end",self.end.value());	
@@ -60,7 +99,7 @@ class Streak {
 		var end = Storage.getValue(prefix + "_end");
 		var isActive = Storage.getValue(prefix + "_isActive");
 		if(start == null || end == null || isActive == null){
-			return empty;
+			return Streak.empty();
 		}		
 		return new Streak(new Time.Moment(start),new Time.Moment(end), isActive);
 	}
