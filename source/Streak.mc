@@ -53,14 +53,6 @@ class Streak {
     }
 
     function add(other) {
-        if(!isActive) {
-            if(other.isActive){
-                start = other.start;
-                end = other.end;
-                isActive = true;
-            }
-            return;
-        }
         if(!other.isActive) {
             return;
         }

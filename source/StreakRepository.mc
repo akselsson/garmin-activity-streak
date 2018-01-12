@@ -13,16 +13,21 @@ class StreakRepository {
     var longestStreak;
 
     function load(){
-        var streak = Streak.load("current");
+        var streak = streakFromHistory();
 
-        //var streak = Streak.empty();
-        var historyStreak = streakFromHistory();
+        var storedStreak = Streak.empty();
+        //var storedStreak = Streak.load("current");
 
-        streak.add(historyStreak);
+        streak.add(storedStreak);
         streak.save("current");
 
         var todayStreak = streakFromToday();
-        streak.add(todayStreak);
+        if(streak.isActive){
+            streak.add(todayStreak);
+         }
+         else {
+            streak = todayStreak;
+         }
 
         currentStreak = streak;
 
