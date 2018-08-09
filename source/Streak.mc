@@ -24,7 +24,7 @@ class Streak {
 
     function length(){
         if(isEmpty()){
-            return -1;
+            return 0;
         }
         if(!isActive) {
             return 0;

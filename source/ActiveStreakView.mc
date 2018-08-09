@@ -44,12 +44,6 @@ class ActiveStreakView extends Ui.View {
         var xCenter = width / 2;
         var yCenter = height / 2;
 
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-        if(streak == -1) {
-            dc.drawText(xCenter, yCenter, Graphics.FONT_LARGE, "NO DATA", Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
-            return;
-        }
-
         var progressColor = mStreak.percentCompleteToday >= 1 ? Graphics.COLOR_GREEN : Graphics.COLOR_ORANGE;
         var progressDegress = mStreak.percentCompleteToday >= 1 ? 360 : 360 * mStreak.percentCompleteToday;
 
@@ -72,9 +66,6 @@ class ActiveStreakView extends Ui.View {
         dc.drawText(xCenter, yCenter - textHeight / 2 - headingHeight - margin, headingFont, "Current streak", Graphics.TEXT_JUSTIFY_CENTER);
         dc.drawText(xCenter, yCenter, textFont, text, Graphics.TEXT_JUSTIFY_CENTER|Graphics.TEXT_JUSTIFY_VCENTER);
 
-        //var subtext = mStreak.percentCompleteToday >= 1 ?
-        //  "Today: Done!" :
-        //  "" +(mStreak.percentCompleteToday * mStreak.activeMinutesLimit).toLong() + "/" + mStreak.activeMinutesLimit.toLong() + " minutes\ntoday";
         dc.drawText(xCenter, yCenter + textHeight / 2 + margin, headingFont, "days", Graphics.TEXT_JUSTIFY_CENTER);
 
 
