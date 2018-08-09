@@ -69,6 +69,9 @@ class Streak {
     }
 
     function intercepts(streak) {
+        if(isEmpty()){
+            return false;
+        }
         if(start.compare(streak.start) <= 0 && end.compare(streak.start) >= -Gregorian.SECONDS_PER_DAY) {
             return true;
         }

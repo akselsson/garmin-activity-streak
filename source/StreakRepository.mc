@@ -15,8 +15,17 @@ class StreakRepository {
     function load(){
         var streak = streakFromHistory();
 
-        var storedStreak = Streak.empty();
-        //var storedStreak = Streak.load("current");
+
+        /*
+        var today = new Time.Moment(Time.today().value());
+        var daysSinceStart = new Time.Duration(-Gregorian.SECONDS_PER_DAY * 11);
+        var daysSinceEnd = new Time.Duration(-Gregorian.SECONDS_PER_DAY);
+        var storedStreak = new Streak(today.add(daysSinceStart),today.add(daysSinceEnd),true);
+        */
+
+        //var storedStreak = Streak.empty();
+
+        var storedStreak = Streak.load("current");
 
         streak.add(storedStreak);
         streak.save("current");
