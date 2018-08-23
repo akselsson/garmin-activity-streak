@@ -2,8 +2,11 @@
     <iq:application entry="StreakApp" id="b42c826d5b5343bca25cf5fe47a4e817" launcherIcon="@Drawables.LauncherIcon" minSdkVersion="2.4.0" name="@Strings.AppName" type="widget" version="0.0.3">
         <iq:products>
             <iq:product id="fenix5"/>
+            <iq:product id="fenix5plus"/>
             <iq:product id="fenix5s"/>
+            <iq:product id="fenix5splus"/>
             <iq:product id="fenix5x"/>
+            <iq:product id="fenix5xplus"/>
             <iq:product id="fenixchronos"/>
         </iq:products>
         <iq:permissions>
