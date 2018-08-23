@@ -7,7 +7,7 @@ using Toybox.ActivityMonitor;
 
 class StreakRepository {
     var percentCompleteToday = 0;
-    var activeMinutesLimit = 15.0;
+    var activeMinutesLimit = 20.0;
 
     var currentStreak;
     var longestStreak;
