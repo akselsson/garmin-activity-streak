@@ -7,10 +7,22 @@ using Toybox.ActivityMonitor;
 
 class StreakRepository {
     var percentCompleteToday = 0;
-    var activeMinutesLimit = 20.0;
+    var activeMinutesLimit;
 
     var currentStreak;
     var longestStreak;
+
+    function initialize() {
+        var storedActiveMinutesLimit = Storage.getValue("activeMinutesDailyGoal");
+        activeMinutesLimit = storedActiveMinutesLimit != null ? storedActiveMinutesLimit : 20.0;
+    }
+
+
+
+    function setDailyGoal(limit) {
+        activeMinutesLimit = limit;
+        Storage.setValue("activeMinutesDailyGoal", limit);
+    }
 
     function load(){
         var streak = streakFromHistory();

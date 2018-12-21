@@ -1,3 +1,5 @@
 <strings>
     <string id="AppName">Active Streak</string>
+    <string id="MainMenuTitle">Main Menu</string>
+    <string id="SetDailyGoal">Daily Goal</string>
 </strings>

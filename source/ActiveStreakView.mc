@@ -74,9 +74,10 @@ class ActiveStreakView extends Ui.View {
 
 
 
-class ActiveStreakDelegate extends Ui.InputDelegate {
+class ActiveStreakDelegate extends Ui.BehaviorDelegate {
         hidden var mStreak;
         function initialize(runstreaks) {
+            BehaviorDelegate.initialize();
             mStreak = runstreaks;
         }
 
@@ -87,5 +88,10 @@ class ActiveStreakDelegate extends Ui.InputDelegate {
                 return true;
             }
             return false;
+        }
+
+        function onMenu() {
+            Ui.pushView(new Rez.Menus.MainMenu(), new MainMenuDelegate(mStreak), Ui.SLIDE_UP);
+            return true;
         }
 }
