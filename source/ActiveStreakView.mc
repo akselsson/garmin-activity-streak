@@ -41,6 +41,8 @@ class ActiveStreakView extends Ui.View {
         var width = dc.getWidth();
         var height = dc.getHeight();
 
+        var arcMax = width > height ? height : width;
+
         var xCenter = width / 2;
         var yCenter = height / 2;
 
@@ -51,7 +53,7 @@ class ActiveStreakView extends Ui.View {
         dc.clear();
         dc.setColor(progressColor, progressColor);
         for(var i = 1 ; i<= 7; i++) {
-            dc.drawArc(xCenter, yCenter, width / 2 - i, 1, 90, (90 - progressDegress.toLong()) % 360);
+            dc.drawArc(xCenter, yCenter, arcMax / 2 - i, 1, 90, (90 - progressDegress.toLong()) % 360);
         }
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
 

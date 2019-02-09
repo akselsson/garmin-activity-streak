@@ -8,6 +8,8 @@
             <iq:product id="fenix5x"/>
             <iq:product id="fenix5xplus"/>
             <iq:product id="fenixchronos"/>
+            <iq:product id="fr735xt"/>
+            <iq:product id="fr935"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="PersistedContent"/>
